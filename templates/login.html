@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block script %}<script src="/static/login.js" defer></script>{% endblock %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="d-flex align-items-center justify-content-center h-75 bg-light">
+        <form action="/login" method="post" class="needs-validation col-lg-2" novalidate>
+            <div class="mb-3">
+                <h3 class="text-center mb-2" style="color: #537fbe">Log in to your account</h3>
+                <p>Welcome back! Please enter your details</p>
+                <hr class="border-bottom">
+                <input type="text" class="form-control mx-auto" autocomplete="off" autofocus  id="username" name="username" placeholder="Username"  required>
+                <div class="invalid-feedback">Enter your username</div>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control mx-auto" id="password" name="password" placeholder="Password" required>
+                <div class="invalid-feedback">Enter your password</div>
+            </div>
+
+            <div class="text-centered">
+                <button class="btn btn-outline-primary rounded col-6" type="submit">Log In</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
