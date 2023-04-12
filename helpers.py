@@ -2,7 +2,7 @@ import os
 import requests
 import urllib.parse
 import re
-import yfinance as yf
+import yahooquery as yq
 import pandas as pd
 
 from flask import redirect, render_template, request, session
@@ -39,17 +39,16 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
+#  lookup a single symbol using ticker object from yahooquery
 def lookup(symbol):
     """Look up quote for symbol."""
 
     try:
-        t = Ticker(symbol)
-        check = t.price.get(symbol.upper())
-        print("check: ", check)
-        if check is None:
-            return None
-        if search("Quote not found for ticker symbol", check):
+        # validate using keyword arguments
+        t = Ticker(symbol, validate=True)
+
+        # handle a single symbol (if more are added later the code should be changed)
+        if t.invalid_symbols:
             return None
         else:
             return t
@@ -62,7 +61,7 @@ def lookup(symbol):
 #     """Format value as USD."""
 #     return f"${value:,.2f}"
 
-
+# register pasword validation
 def passValidate(password):
     # Uppercase, lowercase, numbers, spercial characters and min lenght = 8
     if re.match(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", password):
