@@ -36,32 +36,26 @@ def register():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("Must provide username", 400)
-            return redirect("/register")
-
+            return apology("Must provide username", 400)
 
         regUser = request.form.get("username")
         dbUser = db.execute("Select * FROM users WHERE username = ?", regUser)
 
         # Search for duplicate usernames (dbUser) == 1 skips the error with empty lists returned from the db
         if len(dbUser) == 1 and (dbUser[0]["username"]) == regUser:
-            flash("Username taken", 400)
-            return redirect("/register")
+            return apology("Username taken", 400)
 
         # Ensure pasword was submitted
         if not request.form.get("password") or not request.form.get("confirmation"):
-            flash("Please provide password and/or confirmation", 400)
-            return redirect("/register")
+            return apology("Please provide password and/or confirmation", 400)
 
         # Ensure password and password confirmation match
         if request.form.get("password") != request.form.get("confirmation"):
-            flash("Passwords do not match", 400)
-            return redirect("/register")
+            return apology("Passwords do not match", 400)
 
         # Validate password
         if passValidate(request.form.get("password")) is False:
-            flash("Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters", 400)
-            return redirect("/register")
+            return apology("Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters", 400)
 
        # If both username and password are validated register the user and update the db
         regPass = request.form.get("password")
@@ -88,21 +82,18 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("must provide username", 403)
-            return redirect("/login")
+            return apology("must provide username", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("must provide password", 403)
-            return redirect("/login")
+            return apology("must provide password", 403)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Invalid username and/or password", 403)
-            return redirect("/login")
+            return apology("Invalid username and/or password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -132,22 +123,24 @@ def logout():
 @login_required
 def index():
     """Get stock quote."""
+
     if request.method == "POST":
         symbol = request.form.get("symbol")
         print("symbol: ", symbol)
+
         if symbol:
             ticker = lookup(symbol)
 
-            if ticker is  None:
+            if ticker is None:
                 flash("The symbol does not exist! Please enter a valid symbol.")
                 return redirect("/")
 
             else:
                 return render_template("quoted.html", data=ticker, symbol=symbol)
+
         else:
             # If lookup is not succesful return apology("the symbol does not exist!")
             flash("Please Emter a symbol!")
             return redirect("/")
-        ...
     else:
         return render_template("index.html")

@@ -8,7 +8,6 @@ import pandas as pd
 from flask import redirect, render_template, request, session
 from functools import wraps
 from yahooquery import Ticker
-from re import search
 
 
 def apology(message, code=400):
@@ -50,6 +49,7 @@ def lookup(symbol):
         # handle a single symbol (if more are added later the code should be changed)
         if t.invalid_symbols:
             return None
+
         else:
             return t
     except (KeyError, ValueError, AttributeError):
