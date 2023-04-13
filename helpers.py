@@ -60,6 +60,7 @@ def lookup(symbol):
 #     """Format value as USD."""
 #     return f"${value:,.2f}"
 
+
 # register pasword validation
 def passValidate(password):
 
