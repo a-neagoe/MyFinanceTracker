@@ -1,6 +1,6 @@
 from yahooquery import Ticker
 
-# do some testing!!!
+# another test!!!
 try:
     aapl = Ticker('1111')
     print(aapl.summary_profile['aapl']['longBusinessSummary'])
