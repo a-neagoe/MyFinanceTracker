@@ -49,7 +49,6 @@ def lookup(symbol):
         # handle a single symbol (if more are added later the code should be changed)
         if t.invalid_symbols:
             return None
-
         else:
             return t
     except (KeyError, ValueError, AttributeError):
@@ -63,6 +62,7 @@ def lookup(symbol):
 
 # register pasword validation
 def passValidate(password):
+
     # Uppercase, lowercase, numbers, spercial characters and min lenght = 8
     if re.match(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", password):
         return True
