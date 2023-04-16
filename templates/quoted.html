@@ -9,42 +9,52 @@
 {% block main %}
 
 
+  <!-- Query symbol -->
+  <div class="container-fluid bg-light">
+      <h3 class="text-center text-primary pt-4">Search quote!</h3>
+      <div class="row justify-content-center">
+          <div class="py-5 col-5">
+              <form action="/" method="post">
+                  <div class="input-group input-group-lg">
+                      <span class="input-group-text" id="basic-addon1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                      </span>
+                      <input type="text" class="form-control" id="symbol" name="symbol" placeholder="Symbol" required>
+                      <button class="btn btn-primary" id="symbolSubmit" name="symbolSubmit" type="submit">Search</button>
+                  </div>
+                  <div class="form-text fw-lighter">Enter symbol's name ex: Netflix's symbol is NFLX!</div>
+              </form>
+          </div>
+      </div>
+  </div>
 
-<div class="container-fluid bg-light">
-    <h3 class="text-center text-primary pt-4">Search quote!</h3>
-    <div class="row justify-content-center">
-        <div class="py-5 col-5">
-            <form action="/" method="post">
-                <div class="input-group input-group-lg">
-                    <span class="input-group-text" id="basic-addon1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
-                    </span>
-                    <input type="text" class="form-control" id="symbol" name="symbol" placeholder="Symbol" required>
-                    <button class="btn btn-primary" id="symbolSubmit" name="symbolSubmit" type="submit">Search</button>
-                </div>
-                <div class="form-text fw-lighter">Enter symbol's name ex: Netflix's symbol is NFLX!</div>
-            </form>
-        </div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Summary</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+      </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <h4>Description</h4>
+          {{ data.summary_profile[symbol]['longBusinessSummary'] }}
+
+      </div>
+      <div class="tab-pane" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
+      <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">test 2 3</div>
+      <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">alt test legat de conținut</div>
     </div>
-</div>
-
-<div class="container-fluid bg-light pt-2">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Info</th>
-                <th>To do</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td> {{ data.summary_profile[symbol]['longBusinessSummary'] }}</td>
-                <td> test</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
 
 
 {% endblock %}

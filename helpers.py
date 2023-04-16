@@ -1,6 +1,3 @@
-import os
-import requests
-import urllib.parse
 import re
 import yahooquery as yq
 import pandas as pd
