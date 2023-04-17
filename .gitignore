@@ -1,0 +1,15 @@
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Flask Session
+flask_session/
+
+# Visual Studio 2015 cache/options directory
+.vscode/
+
+# Ignore .env
+.env
+
+# Ignore test.py
+test.py
