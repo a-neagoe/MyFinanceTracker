@@ -37,7 +37,7 @@ def login_required(f):
 
 #  lookup a single symbol using ticker object from yahooquery
 def lookup(symbol):
-    """Look up quote for symbol."""
+    """Look up ticker."""
 
     try:
         # validate using keyword arguments

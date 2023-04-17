@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block script %}{% endblock %}
+
+{% block title %}
+    Ticker
+{% endblock %}
+
+{% block main %}
+
+
+  <!-- Query symbol -->
+  <div class="container-fluid bg-light">
+      <h3 class="text-center text-primary pt-4">Search quote!</h3>
+      <div class="row justify-content-center">
+          <div class="py-5 col-5">
+              <form action="/" method="post">
+                  <div class="input-group input-group-lg">
+                      <span class="input-group-text" id="basic-addon1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                      </span>
+                      <input type="text" class="form-control" id="symbol" name="symbol" placeholder="Symbol" required>
+                      <button class="btn btn-primary" id="symbolSubmit" name="symbolSubmit" type="submit">Search</button>
+                  </div>
+                  <div class="form-text fw-lighter">Enter symbol's name ex: Netflix's symbol is NFLX!</div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <!-- Ticker short info -->
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Summary</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="holdings-tab" data-bs-toggle="tab" data-bs-target="#holdings" type="button" role="tab" aria-controls="holdings" aria-selected="false">Holdings</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="performace-tab" data-bs-toggle="tab" data-bs-target="#performace" type="button" role="tab" aria-controls="performace" aria-selected="false">Performace</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab" aria-controls="analysis" aria-selected="false">Analysis</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" type="button" role="tab" aria-controls="statistics" aria-selected="false">Statistics</button>
+      </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+      <!-- Profile tab -->
+      <div class="tab-pane active bg-body" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <h4 class="pt-4">Description</h4>
+          <p class="p-4 text-start"> {{ data.summary_profile[symbol]['longBusinessSummary'] }} </p>
+
+      </div>
+      <!-- Summary tab -->
+      <div class="tab-pane bg-body" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
+
+      <!-- Holders tab -->
+      <div class="tab-pane bg-body" id="holdings" role="tabpanel" aria-labelledby="holdings-tab">test 2 3</div>
+
+      <!-- Financials tab -->
+      <div class="tab-pane bg-body" id="performance" role="tabpanel" aria-labelledby="performance-tab">alt pam pam</div>
+
+      <!-- Analysis tab -->
+      <div class="tab-pane bg-body" id="analysis" role="tabpanel" aria-labelledby="analysis-tab">analysis</div>
+
+      <!-- Statistics tab -->
+      <div class="tab-pane bg-body" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">analysis</div>
+    </div>
+
+
+{% endblock %}

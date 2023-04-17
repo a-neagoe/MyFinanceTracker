@@ -7,7 +7,6 @@ from helpers import apology, login_required, passValidate, lookup
 
 # Configure application
 app = Flask(__name__)
-app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -125,7 +124,7 @@ def index():
                 flash("The symbol does not exist! Please enter a valid symbol.")
                 return redirect("/")
             else:
-                return render_template("quoted.html", data=ticker, symbol=symbol)
+                return render_template("stocks.html", data=ticker, symbol=symbol)
         else:
             # If empty symbol
             flash("Please Emter a symbol!")

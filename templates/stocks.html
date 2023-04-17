@@ -28,6 +28,8 @@
       </div>
   </div>
 
+  <!-- Ticker short info -->
+
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -37,23 +39,42 @@
         <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Summary</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+        <button class="nav-link" id="holders-tab" data-bs-toggle="tab" data-bs-target="#holders" type="button" role="tab" aria-controls="holders" aria-selected="false">Holders</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+        <button class="nav-link" id="financials-tab" data-bs-toggle="tab" data-bs-target="#financials" type="button" role="tab" aria-controls="financials" aria-selected="false">Financials</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab" aria-controls="analysis" aria-selected="false">Analysis</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" type="button" role="tab" aria-controls="statistics" aria-selected="false">Statistics</button>
       </li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-      <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <h4>Description</h4>
-          {{ data.summary_profile[symbol]['longBusinessSummary'] }}
+
+      <!-- Profile tab -->
+      <div class="tab-pane active bg-body" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <h4 class="pt-4">Description</h4>
+          <p class="p-4 text-start"> {{ data.summary_profile[symbol]['longBusinessSummary'] }} </p>
 
       </div>
-      <div class="tab-pane" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
-      <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">test 2 3</div>
-      <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">alt test legat de conținut</div>
+      <!-- Summary tab -->
+      <div class="tab-pane bg-body" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
+
+      <!-- Holders tab -->
+      <div class="tab-pane bg-body" id="holders" role="tabpanel" aria-labelledby="holders-tab">test 2 3</div>
+
+      <!-- Financials tab -->
+      <div class="tab-pane bg-body" id="financials" role="tabpanel" aria-labelledby="financials-tab">alt pam pam</div>
+
+      <!-- Analysis tab -->
+      <div class="tab-pane bg-body" id="analysis" role="tabpanel" aria-labelledby="analysis-tab">analysis</div>
+
+      <!-- Statistics tab -->
+      <div class="tab-pane bg-body" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">analysis</div>
     </div>
 
 
