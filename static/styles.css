@@ -22,6 +22,10 @@ nav .navbar-brand .green
     color: #2e944b;
 }
 
+div .a1
+{
+    line-height: 10px;
+}
 
 #message {
     display:none;

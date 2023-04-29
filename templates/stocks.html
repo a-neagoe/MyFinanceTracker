@@ -10,7 +10,7 @@
 
 
   <!-- Query symbol -->
-  <div class="container-fluid bg-light">
+  <div class="container">
       <h3 class="text-center text-primary pt-4">Search quote!</h3>
       <div class="row justify-content-center">
           <div class="py-5 col-5">
@@ -28,10 +28,29 @@
       </div>
   </div>
 
-  <!-- Ticker short info -->
+  <div class="container">
+      <!-- Ticker short info -->
+  <div class="row text-start">
+    <div class="col-4 mx-5">
+        <h3 class="fw-bold lh-1"> {{ data.price[symbol]['longName'] }} ({{ symbol }}) </h3>
+        <p class="lh-1">
+          <small> <span class="text-secondary">Exchange: </span> <span class="text-primary">{{ data.price[symbol]['exchangeName'] }}.</span> <span class="text-secondary">Currency: </span> <span class="text-primary">{{ data.price[symbol]['currency'] }}</span>
+          </small>
+        </p>
+
+      <h3 class="fw-bold pt-1 pb-4 lh-1">
+        {{ data.price[symbol]['regularMarketPrice'] }}
+      </h3>
+      <!-- <p class="lh-1 pb-3 text-secondary">
+        <small>
+          Market price
+        </small>
+      </p> -->
+    </div>
+  </div>
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-tabs mx-5" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
       </li>
@@ -53,19 +72,315 @@
   </ul>
 
   <!-- Tab panes -->
-  <div class="tab-content">
+  <div class="tab-content mx-5">
 
       <!-- Profile tab -->
       <div class="tab-pane active bg-body" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <h4 class="pt-4">Description</h4>
-          <p class="p-4 text-start"> {{ data.summary_profile[symbol]['longBusinessSummary'] }} </p>
-
+        <div class="row px-5 pt-5 pb-2">
+          <h5 class="fw-bold text-start text-primary">{{ data.price[symbol]['longName'] }}</h5>
+          <div class="col-6 text-start">
+            <p>City: {{ data.asset_profile[symbol]['city'] }}
+            <br>State: {{ data.asset_profile[symbol]['state'] }}, {{ data.asset_profile[symbol]['zip'] }}
+            <br>Phone:  {{ data.asset_profile[symbol]['phone'] }}
+            <br>Country: {{ data.asset_profile[symbol]['country'] }}
+            <br>Website: {{ data.asset_profile[symbol]['website'] }}</p>
+          </div>
+          <div class="col-6 text-start">
+            <p>Industry: {{ data.asset_profile[symbol]['industry'] }}
+            <br>Sector: {{ data.asset_profile[symbol]['sector'] }}
+            <br>Employees:  {{ data.asset_profile[symbol]['fullTimeEmployees'] }}</p>
+          </div>
+        </div>
+        <div class="row px-5 pb-2">
+          <h5 class="fw-bold text-start text-primary">Description</h5>
+          <p class="text-start">{{ data.asset_profile[symbol]['longBusinessSummary'] }}</p>
+        </div>
+        <div class="row px-5 pb-2">
+          <div class="col">
+            <h5 class="fw-bold text-start text-primary">Key Executives</h5>
+            {{ officers | safe }}
+          </div>
+        </div>
       </div>
       <!-- Summary tab -->
-      <div class="tab-pane bg-body" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
+      <div class="tab-pane bg-body" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+        <div class="row px-5 pt-5">
+          <div class="col-6">
+
+            <table class="table table-borderless text-start border-0">
+              <tbody>
+                <tr>
+                  <td>
+                    <span>Previous Close: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['regularMarketPreviousClose'] }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Open: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['regularMarketOpen'] }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Bid x Bid Size: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['bid'] }} x {{ data.summary_detail[symbol]['bidSize'] }}</span>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Ask x Ask Size: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['ask'] }} x {{ data.summary_detail[symbol]['askSize'] }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Day's Range: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['regularMarketDayLow'] }} - {{ data.summary_detail[symbol]['regularMarketDayHigh'] }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>52 Week Range: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.summary_detail[symbol]['fiftyTwoWeekLow'] }} - {{ data.summary_detail[symbol]['fiftyTwoWeekHigh'] }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Volume: </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['regularMarketVolume'] %}
+                      <span class="fw-bolder">{{ data.summary_detail[symbol]['regularMarketVolume']|number }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Avg. Volume: </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['averageDailyVolume10Day'] %}
+                      <span class="fw-bolder">{{ data.summary_detail[symbol]['averageDailyVolume10Day']|number }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="col-6">
+            <table class="table table-borderless text-start border-0 ">
+              <tbody>
+                <tr>
+                  <td>
+                    <span>Market Cap: </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['marketCap'] %}
+                      {% set marketCap = data.summary_detail[symbol]['marketCap'] / 1000000000000 %}
+                      <span class="fw-bolder">{{ '%0.3f' % marketCap|float}}T</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Beta (5Y Monthly): </span>
+                  </td>
+                  <td>
+                    {% if data.key_stats[symbol]['beta'] %}
+                      <span class="fw-bolder">{{ '%0.2f' % data.key_stats[symbol]['beta']|float }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>PE Ratio (TTM): </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['trailingPE'] %}
+                      <span class="fw-bolder">{{ '%0.2f' % data.summary_detail[symbol]['trailingPE']|float }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>EPS (TTM): </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['trailingPE'] %}
+                      <span class="fw-bolder">{{ '%0.2f' % data.key_stats[symbol]['trailingEps']|float }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Earnings Date: </span>
+                  </td>
+                  <td>
+                    {% if data.calendar_events[symbol]['earnings']['earningsDate'][0] %}
+                      <span class="fw-bolder">{{ data.calendar_events[symbol]['earnings']['earningsDate'][0]|displayDate }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Forward Dividend & Yield: </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['dividendYield'] and data.summary_detail[symbol]['dividendRate'] %}
+                      {% set divYield = data.summary_detail[symbol]['dividendYield']*100 %}
+                      <span class="fw-bolder">{{ data.summary_detail[symbol]['dividendRate'] }} ({{ '%0.2f' % divYield|float }})%</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Ex-Dividend Date: </span>
+                  </td>
+                  <td>
+                    {% if data.summary_detail[symbol]['exDividendDate'] %}
+                      <span class="fw-bolder">{{ data.summary_detail[symbol]['exDividendDate']|displayDate }}</span>
+                    {% else %}
+                      <span class="fw-bolder">N/A</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>1y Target Est: </span>
+                  </td>
+                  <td>
+                    <span class="fw-bolder">{{ data.financial_data[symbol]['targetMeanPrice'] }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="chart" id="bargraph">
+              <script>
+                  var graphs = tickrHistory | safe;
+                  Plotly.plot('bargraph',graphs,{});
+              </script>
+              {{ graphs|safe}}
+          </div>
+          </div>
+        </div>
+
+      </div>
 
       <!-- Holders tab -->
-      <div class="tab-pane bg-body" id="holders" role="tabpanel" aria-labelledby="holders-tab">test 2 3</div>
+      <div class="tab-pane bg-body" id="holders" role="tabpanel" aria-labelledby="holders-tab">
+
+        <div class="row px-5 pt-5 pb-3">
+          <div class="text-start">
+            <h5 class="fw-bold text-primary">Major Holders</h5>
+            <span><small>Breakdown</small></span>
+          </div>
+
+          <table class="table mx-1 text-start border-0 ">
+            <tbody>
+              <tr>
+                <td>
+                  {% if data.major_holders[symbol]['insidersPercentHeld'] %}
+                    {% set insPercent = data.major_holders[symbol]['insidersPercentHeld'] * 100 %}
+                    <span class="fw-bolder">{{ '%0.2f' % insPercent|float }}%</span>
+                  {% else %}
+                    <span class="fw-bolder">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  % of Shares Held by All Insider
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {% if data.major_holders[symbol]['institutionsPercentHeld'] %}
+                  {% set institutPercent = data.major_holders[symbol]['institutionsPercentHeld'] * 100 %}
+                    <span class="fw-bolder">{{ '%0.2f' % institutPercent|float }}%</span>
+                  {% else %}
+                    <span class="fw-bolder">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  % of Shares Held by Institutions
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {% if data.major_holders[symbol]['institutionsFloatPercentHeld'] %}
+                  {% set insFloatPercent = data.major_holders[symbol]['institutionsFloatPercentHeld'] * 100 %}
+                    <span class="fw-bolder">{{ '%0.2f' % insFloatPercent|float }}%</span>
+                  {% else %}
+                    <span class="fw-bolder">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  % of Float Held by Institutions
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {% if data.major_holders[symbol]['institutionsCount'] %}
+                    <span class="fw-bolder">{{ data.major_holders[symbol]['institutionsCount']|number }}%</span>
+                  {% else %}
+                    <span class="fw-bolder">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  Number of Institutions Holding Shares
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row px-5 pb-2">
+          <div class="col">
+            <h5 class="fw-bold text-start text-primary">Top Institutional Holders</h5>
+            {{ iOwnership|safe }}
+          </div>
+        </div>
+        <div class="row px-5 pb-2">
+          <div class="col">
+            <h5 class="fw-bold text-start text-primary">Top Mutual Fund Holders</h5>
+            {{ fOwnership|safe }}
+          </div>
+        </div>
+
+      </div>
 
       <!-- Financials tab -->
       <div class="tab-pane bg-body" id="financials" role="tabpanel" aria-labelledby="financials-tab">alt pam pam</div>
@@ -76,6 +391,10 @@
       <!-- Statistics tab -->
       <div class="tab-pane bg-body" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">analysis</div>
     </div>
+
+
+  </div>
+
 
 
 {% endblock %}

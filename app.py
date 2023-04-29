@@ -3,7 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, passValidate, lookup
+from helpers import apology, number, login_required, passValidate, lookup, company_officers, tickerHistory, displayDate, fundOwnership, institution_ownership
 
 # Configure application
 app = Flask(__name__)
@@ -16,9 +16,11 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///stock.db")
 
+# Custom filter for displaying numbers
+app.jinja_env.filters["number"] = number
 
-# Custom filter
-# app.jinja_env.filters["usd"] = usd
+# Custom filter for displaying date
+app.jinja_env.filters["displayDate"] = displayDate
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -113,7 +115,9 @@ def index():
     """Get stock quote."""
 
     if request.method == "POST":
-        symbol = request.form.get("symbol")
+
+        # Standardize Symbol for Jinja use with upper
+        symbol = request.form.get("symbol").upper()
         print("symbol: ", symbol)
 
         if symbol:
@@ -124,8 +128,14 @@ def index():
                 flash("The symbol does not exist! Please enter a valid symbol.")
                 return redirect("/")
             else:
-                return render_template("stocks.html", data=ticker, symbol=symbol)
+                compOfficers = company_officers(ticker, symbol).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+                fOwnership = fundOwnership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+                iOwnership = institution_ownership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+                showTickerHistory = tickerHistory(ticker, symbol).to_html
+
+                return render_template("stocks.html", data=ticker, symbol=symbol, officers=compOfficers, tickrHistory = showTickerHistory, fOwnership = fOwnership, iOwnership = iOwnership)
         else:
+
             # If empty symbol
             flash("Please Emter a symbol!")
             return redirect("/")
