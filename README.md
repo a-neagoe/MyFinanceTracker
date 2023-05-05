@@ -2,7 +2,7 @@
 #### Video Demo:  <URL HERE>
 #### Description:
 
-Stock Research is a flask app made for looking up information about Stocks, Mutual Funds and ETF.
+Stock Research is a flask app made for looking up information about Stocks, Mutual Funds and ETFs.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ plotly.graph_objs
 ```
 
 ## Use and purpose:
-Primarily for self learning about Stock Market. In the long run I want to add notes and info about data found in the app and advanced charts displayed in a separate page.
+Primarily for self learning about the Stock Market. In the long run I want to add notes and info about data found in the app and advanced charts displayed in a separate page.
 
 Example:
 > Bid size represents the quantity of a security that investors are willing to purchase at a specified bid price. Bid size is stated in board lots representing 100 shares each. Therefore, a bid size of four represents 400 shares. Bid sizes are important because they reflect the demand and liquidity of a security.
@@ -35,11 +35,9 @@ The other functions are used in support and they return dataframes used for the 
 
 ## Some design considerations: Why I did or did not do some things
 
-The web app is far from finished and it's main flaw is the loading time for the stocks. Because the API had data  for the Yahoo Finance tabs in multiple modules, I had to compromise and made queries for each row displayed in some tabs as the info displayed with loops and dictionaries would not have the same usability. This got worse as the all tabs displayed in the main page are loaded upfront. The queries also needed empty data verification deployed directly in jinja in order to prevent the app's crash, if the filters used for usability would be applied on empty data objects.
+The web app is far from finished and it's main flaw is the loading time for the stocks. The data is pulled from multiple modules of the API so in order to replicate the Yahoo Finance tabs and I had to compromise and use multiple queries for each tab displayed. This got worse as the all tabs displayed in the main page are loaded upfront. The queries also needed validation deployed directly in jinja's template in order to prevent the app's crash, if the filters used for usability would be applied on empty data objects.
 
-The loading time could be mitigated if each tab would be rendered in a separate template, preserving the main page's layout and  making the request less taxing, as there would be less overhead when making the querries. I could also try to prepare and serve the data better in the helpers functions.
-
-
+The loading time could be mitigated if each tab would be rendered in a separate template, preserving the main page's layout and  making the request less taxing, as there would be less overhead when making the queries. I could also try to prepare and serve the data better in the helpers functions.
 
 ## Roadmap
 
