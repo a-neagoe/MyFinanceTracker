@@ -133,7 +133,7 @@ def institution_ownership(tick):
     return data
 
 
-# Create a Panda DataFrame from a list:
+# Panda DataFrame for ticker history:
 def tickerHistory(tick, symbol):
 
     # Get the approximate start date three years ago
