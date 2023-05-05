@@ -4,3 +4,4 @@ Flask-Session
 requests
 pandas
 yahooquery
+plotly.graph_objs

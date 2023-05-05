@@ -30,8 +30,8 @@
 
   <div class="container">
       <!-- Ticker short info -->
-  <div class="row text-start">
-    <div class="col-4 mx-5">
+    <div class="row text-start">
+      <div class="col-6 mx-5">
         <h3 class="fw-bold lh-1"> {{ data.price[symbol]['longName'] }} ({{ symbol }}) </h3>
         <p class="lh-1">
           <small> <span class="text-secondary">Exchange: </span> <span class="text-primary">{{ data.price[symbol]['exchangeName'] }}.</span> <span class="text-secondary">Currency: </span> <span class="text-primary">{{ data.price[symbol]['currency'] }}</span>
@@ -39,7 +39,7 @@
         </p>
 
       <h3 class="fw-bold pt-1 pb-4 lh-1">
-        {{ data.price[symbol]['regularMarketPrice'] }}
+        {{ '%0.2f' % data.price[symbol]['regularMarketPrice']|float }}
       </h3>
       <!-- <p class="lh-1 pb-3 text-secondary">
         <small>
@@ -61,14 +61,9 @@
         <button class="nav-link" id="holders-tab" data-bs-toggle="tab" data-bs-target="#holders" type="button" role="tab" aria-controls="holders" aria-selected="false">Holders</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="financials-tab" data-bs-toggle="tab" data-bs-target="#financials" type="button" role="tab" aria-controls="financials" aria-selected="false">Financials</button>
+        <button class="nav-link" id="chart-tab" data-bs-toggle="tab" data-bs-target="#chart" type="button" role="tab" aria-controls="chart" aria-selected="false">Chart</button>
       </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab" aria-controls="analysis" aria-selected="false">Analysis</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" type="button" role="tab" aria-controls="statistics" aria-selected="false">Statistics</button>
-      </li>
+
   </ul>
 
   <!-- Tab panes -->
@@ -288,17 +283,7 @@
             </table>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="chart" id="bargraph">
-              <script>
-                  var graphs = tickrHistory | safe;
-                  Plotly.plot('bargraph',graphs,{});
-              </script>
-              {{ graphs|safe}}
-          </div>
-          </div>
-        </div>
+
 
       </div>
 
@@ -382,17 +367,17 @@
 
       </div>
 
-      <!-- Financials tab -->
-      <div class="tab-pane bg-body" id="financials" role="tabpanel" aria-labelledby="financials-tab">alt pam pam</div>
+      <!-- Chart tab -->
+      <div class="tab-pane bg-body" id="chart" role="tabpanel" aria-labelledby="chart-tab">
+        <div class="row d-flex align-content-center">
+          <div class="col">
+            <div>
+              {{ tickrHistory|safe}}
+            </div>
+          </div>
+        </div>
 
-      <!-- Analysis tab -->
-      <div class="tab-pane bg-body" id="analysis" role="tabpanel" aria-labelledby="analysis-tab">analysis</div>
-
-      <!-- Statistics tab -->
-      <div class="tab-pane bg-body" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">analysis</div>
-    </div>
-
-
+      </div>
   </div>
 
 

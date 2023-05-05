@@ -3,7 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, number, login_required, passValidate, lookup, company_officers, tickerHistory, displayDate, fundOwnership, institution_ownership
+from helpers import number, login_required, passValidate, lookup, lookupETF, company_officers, tickerHistory, displayDate, fundOwnership, institution_ownership, fund_holding_info
 
 # Configure application
 app = Flask(__name__)
@@ -29,26 +29,31 @@ def register():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("Must provide username", 400)
+            flash("Must provide username")
+            return render_template("register.html")
 
         regUser = request.form.get("username")
         dbUser = db.execute("Select * FROM users WHERE username = ?", regUser)
 
         # Search for duplicate usernames (dbUser) == 1 skips the error with empty lists returned from the db
         if len(dbUser) == 1 and (dbUser[0]["username"]) == regUser:
-            return apology("Username taken", 400)
+            flash("Username taken")
+            return render_template("register.html")
 
         # Ensure pasword was submitted
         if not request.form.get("password") or not request.form.get("confirmation"):
-            return apology("Please provide password and/or confirmation", 400)
+            flash("Please provide password and/or confirmation")
+            return render_template("register.html")
 
         # Ensure password and password confirmation match
         if request.form.get("password") != request.form.get("confirmation"):
-            return apology("Passwords do not match", 400)
+            flash("Passwords do not match")
+            return render_template("register.html")
 
         # Validate password
         if passValidate(request.form.get("password")) is False:
-            return apology("Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters", 400)
+            flash("Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters")
+            return render_template("register.html")
 
        # If both username and password are validated register the user and update the db
         regPass = request.form.get("password")
@@ -73,18 +78,22 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            flash("Must provide username")
+            return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            flash("Must provide password")
+            return render_template("login.html")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("Invalid username and/or password", 403)
+            # return apology("Invalid username and/or password", 403)
+            flash("Invalid username and/or password")
+            return render_template("login.html")
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -122,18 +131,27 @@ def index():
 
         if symbol:
             ticker = lookup(symbol)
+            etf = lookupETF(symbol)
 
             # If lookup is not succesful return apology:
             if ticker is None:
                 flash("The symbol does not exist! Please enter a valid symbol.")
                 return redirect("/")
+
+            elif etf is not None:
+                print(etf)
+                f_h_info = fund_holding_info(etf, symbol).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+
+                return render_template("etfs.html", etf=etf, symbol=symbol, f_h_info = f_h_info)
+
             else:
                 compOfficers = company_officers(ticker, symbol).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
                 fOwnership = fundOwnership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
                 iOwnership = institution_ownership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
-                showTickerHistory = tickerHistory(ticker, symbol).to_html
+                showTickerHistory = tickerHistory(ticker, symbol)
 
                 return render_template("stocks.html", data=ticker, symbol=symbol, officers=compOfficers, tickrHistory = showTickerHistory, fOwnership = fOwnership, iOwnership = iOwnership)
+
         else:
 
             # If empty symbol

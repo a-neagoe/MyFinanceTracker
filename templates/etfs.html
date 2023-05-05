@@ -28,53 +28,81 @@
       </div>
   </div>
 
-  <!-- Ticker short info -->
+  <div class="container">
+
+    <!-- Ticker short info -->
+    <div class="row text-start">
+      <div class="col-6">
+        <h3 class="fw-bold lh-1"> {{ etf.price[symbol]['longName'] }} ({{ symbol }}) </h3>
+        <p class="lh-1">
+          <small> <span class="text-secondary">Exchange: </span> <span class="text-primary">{{ etf.price[symbol]['exchangeName'] }}.</span> <span class="text-secondary">Currency: </span> <span class="text-primary">{{ etf.price[symbol]['currency'] }}</span>
+          </small>
+        </p>
+
+      <h3 class="fw-bold pt-1 pb-4 lh-1">
+        {{ '%0.2f' % etf.price[symbol]['regularMarketPrice']|float }}
+      </h3>
+      <!-- <p class="lh-1 pb-3 text-secondary">
+        <small>
+          Market price
+        </small>
+      </p> -->
+    </div>
+  </div>
+
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" id="myTab" role="tablist">
+
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Summary</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="holdings-tab" data-bs-toggle="tab" data-bs-target="#holdings" type="button" role="tab" aria-controls="holdings" aria-selected="false">Holdings</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="performace-tab" data-bs-toggle="tab" data-bs-target="#performace" type="button" role="tab" aria-controls="performace" aria-selected="false">Performace</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab" aria-controls="analysis" aria-selected="false">Analysis</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" type="button" role="tab" aria-controls="statistics" aria-selected="false">Statistics</button>
+        <button class="nav-link active" id="holdings-tab" data-bs-toggle="tab" data-bs-target="#holdings" type="button" role="tab" aria-controls="holdings" aria-selected="true">Holdings</button>
       </li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
 
-      <!-- Profile tab -->
-      <div class="tab-pane active bg-body" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <h4 class="pt-4">Description</h4>
-          <p class="p-4 text-start"> {{ data.summary_profile[symbol]['longBusinessSummary'] }} </p>
+      <!-- Holdings tab -->
+      <div class="tab-pane active bg-body" id="holdings" role="tabpanel" aria-labelledby="holdings-tab">
+        <div class="row px-5 pt-5 pb-3">
+          <div class="text-start">
+            <h5 class="fw-bold text-primary">Top 10 Holdings</h5>
+            {{ f_h_info|safe }}
+          </div>
 
       </div>
-      <!-- Summary tab -->
-      <div class="tab-pane bg-body" id="summary" role="tabpanel" aria-labelledby="summary-tab">2 st 2 </div>
 
-      <!-- Holders tab -->
-      <div class="tab-pane bg-body" id="holdings" role="tabpanel" aria-labelledby="holdings-tab">test 2 3</div>
-
-      <!-- Financials tab -->
-      <div class="tab-pane bg-body" id="performance" role="tabpanel" aria-labelledby="performance-tab">alt pam pam</div>
-
-      <!-- Analysis tab -->
-      <div class="tab-pane bg-body" id="analysis" role="tabpanel" aria-labelledby="analysis-tab">analysis</div>
-
-      <!-- Statistics tab -->
-      <div class="tab-pane bg-body" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">analysis</div>
+      <div class="tab-pane active bg-body" id="holdings" role="tabpanel" aria-labelledby="holdings-tab">
+        <div class="row px-5 pt-5 pb-3">
+          <div class="text-start">
+            <h5 class="fw-bold text-primary">Sector Weightings (%)</h5>
+            <table class="table">
+              <thead>
+                <th>
+                  Sector(s)
+                </th>
+                <th>
+                  {{ symbol }}
+                </th>
+              </thead>
+              <tbody>
+                {% for row in etf.fund_holding_info[symbol]['sectorWeightings'] %}
+                  {% for val in row %}
+                    <tr>
+                      <td>
+                          {{ val }}
+                      </td>
+                      <td>
+                          {% set value = (row[val]) * 100 %}
+                          {{ '%0.2f' % value|float }} %
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+      </div>
     </div>
 
 

@@ -7,44 +7,51 @@
 {% endblock %}
 
 {% block main %}
-    <div class="d-flex align-items-center justify-content-center h-75 bg-light">
-        <form action="/register" method="post" class="col-lg-2">
-            <div class="mb-3">
-                <h3 class="text-center mb-3" style="color: #537fbe">Register your acount</h3>
-                <p>Welcome! Please enter your details</p>
-                <hr class="border-bottom">
-                <input autocomplete="off" autofocus class="form-control mx-auto" id="usernameReg" name="username" placeholder="Username" type="text" required>
-                <div class="valid-feedback">Username has at least 3 characters and no spaces!</div>
-            </div>
-            <div class="mb-3">
-                <input type="password" class="form-control mx-auto" id="passInput" name="password" placeholder="Password" autocomplete="password" minlenght="8" required>
-            </div>
+    <div class="d-flex mt-5 h-75 justify-content-center bg-light">
 
-            <div>
-                <ul class="text-start mb-3 border border-primary-subtle rounded-2" id="message">
-                    <div>Password Validation:</div>
-                    <div id="capital" class="invalid">A capital (uppercase) letter</div>
-                    <div id="number" class="invalid">A number</div>
-                    <div id="length" class="invalid">Minimum 8 characters</div>
-                    <div id="special" class="invalid">A special character</div>
-                    <div id="spaces" class="invalid">Should not contain spaces</div>
-                </ul>
-            </div>
+        <div class="row text-center mt-5 mb-3">
+            <h3 class="mb-2" style="color: #537fbe">Register your acount</h3>
+            <p>Welcome! Please enter your details</p>
 
+            <div class="col-6 mx-auto">
+                <form action="/register" method="post">
+                    <div class="mb-3">
+                        <hr class="border-bottom">
+                        <input autocomplete="off" autofocus class="form-control" id="usernameReg" name="username" placeholder="Username" type="text" required>
+                        <div class="valid-feedback">Username has at least 3 characters and no spaces!</div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="passInput" name="password" placeholder="Password" autocomplete="password" minlenght="8" required>
+                    </div>
 
-            <div class="text-centered mb-3">
-                <input type="password" class="form-control mx-auto" id="passConfirm" name="confirmation" placeholder="Confirm Password"  autocomplete="password" required>
-                <div class="valid-feedback">Passwords match!</div>
+                    <div>
+                        <ul class="text-start mb-3 border border-primary-subtle rounded-2" id="message">
+                            <div>Password Validation:</div>
+                            <div id="capital" class="invalid">A capital (uppercase) letter</div>
+                            <div id="number" class="invalid">A number</div>
+                            <div id="length" class="invalid">Minimum 8 characters</div>
+                            <div id="special" class="invalid">A special character</div>
+                            <div id="spaces" class="invalid">Should not contain spaces</div>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="passConfirm" name="confirmation" placeholder="Confirm Password"  autocomplete="password" required>
+                        <div class="valid-feedback">Passwords match!</div>
+                    </div>
+                    <div>
+                        <input class="form-check-input" type="checkbox" value="" id="checkTerms" name="checkTerms" checked required>
+                        <label class="form-check-label" for="checkTerms">
+                            Accept terms and conditions!
+                        </label>
+                    </div>
+                    <div>
+                        <button id="submitBtn" class="btn btn-outline-primary mt-2 rounded col-6" type="submit">Create Account</button>
+                    </div>
+                </form>
+
             </div>
-            <div>
-                <input class="form-check-input" type="checkbox" value="" id="checkTerms" name="checkTerms" checked>
-                <label class="form-check-label" for="checkTerms">
-                    Accept terms and conditions!
-                </label>
-            </div>
-            <div class="text-centered">
-                <button id="submitBtn" class="btn btn-outline-primary mt-2 rounded col-9" type="submit">Create Account</button>
-            </div>
-        </form>
+        </div>
+
     </div>
 {% endblock %}
