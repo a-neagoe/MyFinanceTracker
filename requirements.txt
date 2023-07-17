@@ -1,8 +1,7 @@
 cs50==9.2.5
 Flask==2.3.2
-Flask==1.1.1
+Flask-Session==0.5.0
 pandas==2.0.3
 plotly==5.15.0
 Werkzeug==2.3.6
-Werkzeug==0.16.1
 yahooquery==2.3.2
