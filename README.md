@@ -36,4 +36,4 @@ The other functions are used in support and they return dataframes used for the 
 
 ## To Do
 
-Store the data in variables to reduce the number of querries and increasae load times.
+Store the data in variables to reduce the number of querries and decrease load times.
