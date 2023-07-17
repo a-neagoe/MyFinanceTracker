@@ -3,7 +3,19 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import number, login_required, passValidate, lookup, lookupETF, company_officers, tickerHistory, displayDate, fundOwnership, institution_ownership, fund_holding_info
+from helpers import (
+    number,
+    login_required,
+    passValidate,
+    lookup,
+    lookupETF,
+    company_officers,
+    tickerHistory,
+    displayDate,
+    fundOwnership,
+    institution_ownership,
+    fund_holding_info,
+)
 
 # Configure application
 app = Flask(__name__)
@@ -26,7 +38,6 @@ app.jinja_env.filters["displayDate"] = displayDate
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             flash("Must provide username")
@@ -52,14 +63,20 @@ def register():
 
         # Validate password
         if passValidate(request.form.get("password")) is False:
-            flash("Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters")
+            flash(
+                "Password must have: Uppercase & lowercase letters, numbers, spercial characters and min 8 characters"
+            )
             return render_template("register.html")
 
-       # If both username and password are validated register the user and update the db
+        # If both username and password are validated register the user and update the db
         regPass = request.form.get("password")
 
         # Register user and password in the database
-        db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", regUser, generate_password_hash(regPass))
+        db.execute(
+            "INSERT INTO users (username, hash) VALUES(?, ?)",
+            regUser,
+            generate_password_hash(regPass),
+        )
         flash("Registered!")
         return redirect("/")
     else:
@@ -75,7 +92,6 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             flash("Must provide username")
@@ -87,10 +103,14 @@ def login():
             return render_template("login.html")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        )
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(
+            rows[0]["hash"], request.form.get("password")
+        ):
             # return apology("Invalid username and/or password", 403)
             flash("Invalid username and/or password")
             return render_template("login.html")
@@ -124,7 +144,6 @@ def index():
     """Get stock quote."""
 
     if request.method == "POST":
-
         # Standardize Symbol for Jinja use with upper
         symbol = request.form.get("symbol").upper()
         print("symbol: ", symbol)
@@ -140,20 +159,45 @@ def index():
 
             elif etf is not None:
                 print(etf)
-                f_h_info = fund_holding_info(etf, symbol).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+                f_h_info = fund_holding_info(etf, symbol).to_html(
+                    classes=["table", "text-start", "border-0", "table-hover"],
+                    index=False,
+                    justify="left",
+                )
 
-                return render_template("etfs.html", etf=etf, symbol=symbol, f_h_info = f_h_info)
+                return render_template(
+                    "etfs.html", etf=etf, symbol=symbol, f_h_info=f_h_info
+                )
 
             else:
-                compOfficers = company_officers(ticker, symbol).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
-                fOwnership = fundOwnership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
-                iOwnership = institution_ownership(ticker).to_html(classes=["table", "text-start", "border-0", "table-hover"], index=False, justify="left")
+                compOfficers = company_officers(ticker, symbol).to_html(
+                    classes=["table", "text-start", "border-0", "table-hover"],
+                    index=False,
+                    justify="left",
+                )
+                fOwnership = fundOwnership(ticker).to_html(
+                    classes=["table", "text-start", "border-0", "table-hover"],
+                    index=False,
+                    justify="left",
+                )
+                iOwnership = institution_ownership(ticker).to_html(
+                    classes=["table", "text-start", "border-0", "table-hover"],
+                    index=False,
+                    justify="left",
+                )
                 showTickerHistory = tickerHistory(ticker, symbol)
 
-                return render_template("stocks.html", data=ticker, symbol=symbol, officers=compOfficers, tickrHistory = showTickerHistory, fOwnership = fOwnership, iOwnership = iOwnership)
+                return render_template(
+                    "stocks.html",
+                    data=ticker,
+                    symbol=symbol,
+                    officers=compOfficers,
+                    tickrHistory=showTickerHistory,
+                    fOwnership=fOwnership,
+                    iOwnership=iOwnership,
+                )
 
         else:
-
             # If empty symbol
             flash("Please Emter a symbol!")
             return redirect("/")
