@@ -33,3 +33,7 @@ Flask app with app.py, helpers.py, database and two folders for the templates an
 The main functions are lookup and lookupETF and they provide data objects for stocks and mutual funds/etfs. Each function uses a different template/route as the information displayed for ETFs is less comprehensive than the one used for stocks.
 
 The other functions are used in support and they return dataframes used for the tables (made with pandas), filters used for jinja, the chart with the OHLC data for the past three years or the password validation used for the registration module.
+
+## To Do
+
+Store the data in variables to reduce the number of querries and increasae load times.
