@@ -205,5 +205,6 @@ def index():
         return render_template("index.html")
 
 
+# Start Flask without debugging
 if __name__ == "__main__":
     app.run()
