@@ -12,6 +12,7 @@ Flask
 Flask-Session
 requests
 pandas
+Werkzeug
 yahooquery (versions below v2.3.2 are broken)
 plotly.graph_objs
 ```
