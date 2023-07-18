@@ -65,3 +65,6 @@ ehthumbs.db
 Thumbs.db
 .vercel
 vercel.json
+
+# Docker
+Dockerfile
