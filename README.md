@@ -10,6 +10,7 @@ Stock Research is a flask app made for looking up information about Stocks, Mutu
 cs50
 Flask
 Flask-Session
+Jinja2
 requests
 pandas
 Werkzeug
