@@ -20,7 +20,9 @@ plotly.graph_objs
 
 ## Use and purpose:
 
-This web app was designed Primarily for self learning about the Stock Market. In the long run I want to add notes and info about financial indicators displayed in the app and provide advanced charts displayed in a separate page.
+This web app was designed primarily for self-learning using tools like flask/jinja and docker.
+
+It will querry the yahoo finance using the yahoo finance Unofficial API (Yahoo does not provide any official API to developers, nor makes any guarantees regarding service availability or API consistency)
 
 Example:
 
